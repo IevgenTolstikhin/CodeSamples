@@ -1,0 +1,3 @@
+1) Use multithreading for parallel running with different lines
+2) Use IPC for emulating user's kick
+3) Write admin part for running specific lines with specific gamers, etc
