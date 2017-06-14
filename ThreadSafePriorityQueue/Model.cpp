@@ -1,9 +1,23 @@
+//#include "stdafx.h"
 #include "Model.h"
 #include <chrono>
 #include <fstream>
+#include "string.h"
 
-const BYTE Model::min_priority = 255;
-const BYTE Model::max_priority = 0;
+#ifndef _WIN32
+#include <sys/time.h>
+unsigned long GetTickCount()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return (tv.tv_sec*1000+tv.tv_usec/1000);
+}
+#else
+#include "Windows.h"
+#endif
+
+const unsigned char Model::min_priority = 255;
+const unsigned char Model::max_priority = 0;
 const int32_t Model::min_client_sleep_in_milliseconds = 100;
 const int32_t Model::max_client_sleep_in_milliseconds = 1000;
 const int32_t Model::server_sleep_time_in_seconds = 1;
@@ -65,7 +79,7 @@ void Model::run_server()
 			myfile << "Record number = " << record_number++ << std::endl;
 			myfile << "Write time (in ticks) = " << GetTickCount() << std::endl;
 			myfile << "Client ID = " << tdata->client_id << std::endl;
-			myfile << "Priority = " << static_cast<int32_t>(tdata->priority) << std::endl;
+			myfile << "Priority = " << tdata->priority << std::endl;
 			myfile << "Data Ticks = " << tdata->ticks << std::endl << std::endl;
 			++record_count;
 		}
@@ -85,7 +99,7 @@ TDATA Model::generate_random_data(const int32_t client_id)
 	tmp.priority = priority_distribution(engine);
 	tmp.ticks = GetTickCount();
 	tmp.client_id = client_id;
-	strcpy_s(tmp.data, "Some data");
+	tmp.data = L"Some data";
 
 	return tmp;
 }

@@ -11,8 +11,8 @@
 class Model
 {
 private:
-	static const BYTE min_priority;
-	static const BYTE max_priority;
+	static const unsigned char min_priority;
+	static const unsigned char max_priority;
 	static const int32_t min_client_sleep_in_milliseconds;
 	static const int32_t max_client_sleep_in_milliseconds;
 	static const int32_t server_sleep_time_in_seconds;

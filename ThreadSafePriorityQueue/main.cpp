@@ -1,16 +1,21 @@
 #include <iostream>
 #include <sstream>
-#include <conio.h>
-#include <Shlobj.h>
-#include <Shlwapi.h>
-#include <VersionHelpers.h>
 
 #include "Model.h"
 
-void main()
+int main(int argc, char** argv)
 {
 	const int32_t max_number_of_clients = 10;
 	const int32_t min_number_of_clients = 1;
+
+	std::string userFolder;
+/*
+#ifdef _WIN32
+	userFolder = std::string(getenv("HOMEDRIVE")) + std::string(getenv("HOMEPATH"));
+#else
+	userFolder = std::string(getenv("HOME"));
+#endif
+*/
 
 	int32_t num = 0;
 	do
@@ -22,15 +27,17 @@ void main()
 		ss >> num;
 	} while (num < min_number_of_clients || num > max_number_of_clients);
 
-	Model cs(num, "ClientServer.log");
+	Model cs(num, userFolder + std::string("ClientServer.log"));
 	cs.start();
 
 	char c;
 	do
 	{
 		std::cout << "Do you want to exit? [y/n]\n";
-		c = static_cast<char>(_getch());
+		c = getchar();
 		if (c == 'y')
 			cs.stop();
 	} while (c != 'y');
+
+	return 0;
 }

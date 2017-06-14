@@ -1,15 +1,15 @@
 #ifndef TAG_DATA_H
 #define TAG_DATA_H
 
-#include <Windows.h>
+#include <string>
 
 typedef struct tagTDATA
 {
-	unsigned char priority;
-	DWORD ticks;
-	DWORD client_id;
-	char data[255];
-} TDATA, *PTDATA;
+	uint32_t priority;
+	unsigned long ticks;
+	unsigned long client_id;
+	std::wstring data;
+} TDATA;
 
 bool operator > (const TDATA& lhs, const TDATA& rhs);
 
