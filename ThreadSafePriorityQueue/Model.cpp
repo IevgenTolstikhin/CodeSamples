@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "Model.h"
 #include <chrono>
 #include <fstream>
@@ -12,8 +11,6 @@ unsigned long GetTickCount()
     gettimeofday(&tv,NULL);
     return (tv.tv_sec*1000+tv.tv_usec/1000);
 }
-#else
-#include "Windows.h"
 #endif
 
 const unsigned char Model::min_priority = 255;
@@ -33,6 +30,7 @@ Model::Model(const int32_t clients_number, const std::string& log_path)
 
 Model::~Model()
 {
+	work_finished = true;
 	for (auto& thread : client_threads)
 		if (thread.joinable())
 			thread.join();
@@ -43,11 +41,15 @@ Model::~Model()
 
 void Model::start()
 {
-	for (int32_t i = 1; i <= clients_number; ++i)
-		client_threads.push_back(std::thread(&Model::run_client, this, i));
+	if (client_threads.size() == 0)
+	{
+		for (int32_t i = 1; i <= clients_number; ++i)
+			client_threads.push_back(std::thread(&Model::run_client, this, i));
 
-	server_thread = std::thread(&Model::run_server, this);
+		server_thread = std::thread(&Model::run_server, this);
+	}
 
+	work_finished = false;
 }
 
 void Model::stop()

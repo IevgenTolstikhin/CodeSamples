@@ -1,1 +1,0 @@
-1) Save log file in user folder as not all users are allowed to write data to any place

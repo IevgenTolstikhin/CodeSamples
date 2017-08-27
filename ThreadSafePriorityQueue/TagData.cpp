@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "TagData.h"
 
 bool operator > (const TDATA& lhs, const TDATA& rhs)
