@@ -15,7 +15,7 @@ class CLane
 
 	std::random_device rd;
     std::mt19937 gen;
-    unsigned uAmountOfItems;
+    unsigned m_uAmountOfItems;
     unsigned m_uAmountOfPlayers;
 
 public:

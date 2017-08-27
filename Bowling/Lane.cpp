@@ -6,7 +6,7 @@
 CLane::CLane(unsigned uAmountOfPlayers):  	vpPlayer(uAmountOfPlayers),
 											puUtil(new CUtils),
 											gen(rd()),
-											uAmountOfItems(0),
+											m_uAmountOfItems(0),
 											m_uAmountOfPlayers(uAmountOfPlayers)
 {
 	for(unsigned i = 0; i < m_uAmountOfPlayers; ++i)
@@ -14,7 +14,6 @@ CLane::CLane(unsigned uAmountOfPlayers):  	vpPlayer(uAmountOfPlayers),
 		std::string sName;
 		std::cout << "Input player # " << i + 1 << " name: ";
 		std::cin >> sName;
-		std::cout << std::endl;
 
 		ModifyPlayer(i, sName);
 	}
@@ -47,9 +46,9 @@ void CLane::Play()
 		    	{
 		    		WaitForKick(puUtil->GetMaxItems());
 
-		    		puUtil->Log(pPlayer->GetName(), "1st trial amount of items: " + std::to_string(uAmountOfItems));
+		    		puUtil->Log(pPlayer->GetName(), "1st trial amount of items: " + std::to_string(m_uAmountOfItems));
 
-		    		pPlayer->GetGame()->GetCurrentFrame()->SetFirstTrialItems(uAmountOfItems);
+		    		pPlayer->GetGame()->GetCurrentFrame()->SetFirstTrialItems(m_uAmountOfItems);
 		    		pPlayer->GetGame()->ModifyCurrentTrialNumber();
 		    	}
 
@@ -61,9 +60,9 @@ void CLane::Play()
 
 						WaitForKick(pPlayer->GetGame()->GetRestOfItems());
 
-			    		puUtil->Log(pPlayer->GetName(), "2nd trial amount of items: " + std::to_string(uAmountOfItems));
+			    		puUtil->Log(pPlayer->GetName(), "2nd trial amount of items: " + std::to_string(m_uAmountOfItems));
 
-			    		pPlayer->GetGame()->GetCurrentFrame()->SetSecondTrialItems(uAmountOfItems);
+			    		pPlayer->GetGame()->GetCurrentFrame()->SetSecondTrialItems(m_uAmountOfItems);
 			    		pPlayer->GetGame()->ModifyCurrentTrialNumber();
 			    	}
 		    	}
@@ -79,9 +78,9 @@ void CLane::Play()
 
 			    		WaitForKick(puUtil->GetMaxItems());
 
-			    		puUtil->Log(pPlayer->GetName(), "2nd trial amount of items: " + std::to_string(uAmountOfItems));
+			    		puUtil->Log(pPlayer->GetName(), "2nd trial amount of items: " + std::to_string(m_uAmountOfItems));
 
-			    		pPlayer->GetGame()->GetCurrentFrame()->SetSecondTrialItems(uAmountOfItems);
+			    		pPlayer->GetGame()->GetCurrentFrame()->SetSecondTrialItems(m_uAmountOfItems);
 			    		pPlayer->GetGame()->ModifyCurrentTrialNumber();
 			    	}
 		    	}
@@ -100,9 +99,9 @@ void CLane::Play()
 				    		WaitForKick(puUtil->GetMaxItems());
 				    	}
 
-			    		puUtil->Log(pPlayer->GetName(), "3rd trial amount of items: " + std::to_string(uAmountOfItems));
+			    		puUtil->Log(pPlayer->GetName(), "3rd trial amount of items: " + std::to_string(m_uAmountOfItems));
 
-			    		pPlayer->GetGame()->GetCurrentFrame()->SetFirstTrialItems(uAmountOfItems);
+			    		pPlayer->GetGame()->GetCurrentFrame()->SetFirstTrialItems(m_uAmountOfItems);
 			    		pPlayer->GetGame()->ModifyCurrentTrialNumber();
 			    	}
 
@@ -129,5 +128,5 @@ void CLane::Play()
 void CLane::WaitForKick(unsigned uCurrentAmountOfItems)
 {
 	std::uniform_int_distribution<> dis(0, uCurrentAmountOfItems);
-	uAmountOfItems = dis(rd);
+	m_uAmountOfItems = dis(rd);
 }
