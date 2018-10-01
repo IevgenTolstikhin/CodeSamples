@@ -14,14 +14,14 @@ int main(int argc, char** argv)
 	}
 
 	std::string input(argv[1]);
-	std::map<char, char> dict
+	std::unordered_map<char, char> dict	//It can be read from some config file
 	{
 		std::make_pair('}', '{'), 
 		std::make_pair(']', '['), 
 		std::make_pair(')', '(')
 	};
 
-	std::set<char> dict_start;
+	std::unordered_set<char> dict_start;
 
 	std::transform(dict.begin(), dict.end(), std::inserter(dict_start, dict_start.begin()),
     [](const std::pair<char, char>& key_value) {
