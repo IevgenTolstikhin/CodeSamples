@@ -24,14 +24,14 @@ int main(int argc, char** argv)
 	std::unordered_set<char> dict_start;
 
 	std::transform(dict.begin(), dict.end(), std::inserter(dict_start, dict_start.begin()),
-    [](const std::pair<char, char>& key_value) {
-        return key_value.second;
-    });
+    	[](const std::pair<char, char>& key_value) {
+        	return key_value.second;
+   	});
 
-    std::cout << "Trace: ";
-    std::copy(dict_start.begin(), dict_start.end(),
-              std::ostream_iterator<char>(std::cout, " "));
-    std::cout << std::endl;
+    	std::cout << "Trace: ";
+    	std::copy(dict_start.begin(), dict_start.end(),
+              	std::ostream_iterator<char>(std::cout, " "));
+    	std::cout << std::endl;
 
 	std::stack<char> st;
 	for (auto& c : input)
