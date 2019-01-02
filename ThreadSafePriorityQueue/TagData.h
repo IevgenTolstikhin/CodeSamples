@@ -5,12 +5,12 @@
 
 typedef struct tagTDATA
 {
-	uint32_t priority;
-	unsigned long ticks;
-	unsigned long client_id;
-	std::wstring data;
+    uint32_t priority;
+    unsigned long ticks;
+    unsigned long client_id;
+    std::wstring data;
 } TDATA;
 
-bool operator > (const TDATA& lhs, const TDATA& rhs);
+bool operator>( const TDATA& lhs, const TDATA& rhs );
 
-#endif // TAG_DATA_H
+#endif  // TAG_DATA_H
