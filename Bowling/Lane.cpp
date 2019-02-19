@@ -161,6 +161,6 @@ CLane::WaitForKick( unsigned uCurrentAmountOfItems )
     std::uniform_int_distribution<> dis( 0, uCurrentAmountOfItems );
     m_uAmountOfItems = dis( rd );
 
-    // std::cout << "Input amount of bowls: ";
+    // std::cout << "Input amount of pins: ";
     // std::cin >> m_uAmountOfItems;
 }
