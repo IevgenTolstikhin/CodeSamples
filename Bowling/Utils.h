@@ -3,19 +3,25 @@
 
 #include <string>
 
-typedef enum class _TRIAL_NUMBER_ {FIRST, SECOND, THIRD} TRIAL_NUMBER;
+typedef enum class _TRIAL_NUMBER_
+{
+    FIRST,
+    SECOND,
+    THIRD
+} TRIAL_NUMBER;
 
 class CUtils
 {
-	const unsigned MAX_FRAMES;
-	const unsigned MAX_ITEMS;
-public:
-	CUtils();
-	void Log(const std::string&, const std::string&);
-	void Log(const std::string&);
+    const unsigned MAX_FRAMES;
+    const unsigned MAX_ITEMS;
 
-	unsigned GetMaxFrames() const;
-	unsigned GetMaxItems()  const;
+public:
+    CUtils( );
+    void Log( const std::string&, const std::string& );
+    void Log( const std::string& );
+
+    unsigned GetMaxFrames( ) const;
+    unsigned GetMaxItems( ) const;
 };
 
-#endif //__UTILS_H__
+#endif  //__UTILS_H__
