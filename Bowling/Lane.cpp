@@ -158,9 +158,9 @@ CLane::Play( )
 void
 CLane::WaitForKick( unsigned uCurrentAmountOfItems )
 {
-    // std::uniform_int_distribution<> dis( 0, uCurrentAmountOfItems );
-    // m_uAmountOfItems = dis( rd );
+    std::uniform_int_distribution<> dis( 0, uCurrentAmountOfItems );
+    m_uAmountOfItems = dis( rd );
 
-    std::cout << "Input amount of bowls: ";
-    std::cin >> m_uAmountOfItems;
+    // std::cout << "Input amount of bowls: ";
+    // std::cin >> m_uAmountOfItems;
 }
