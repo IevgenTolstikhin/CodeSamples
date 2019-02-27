@@ -1,0 +1,5 @@
+find_package (Boost COMPONENTS unit_test_framework REQUIRED)
+set (CMAKE_CXX_STANDARD 11)
+include_directories(../src)
+add_executable (Test ../src/BracketClass.h ../src/BracketClass.cpp bracketTests.cpp)
+target_link_libraries (Test)
