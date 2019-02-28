@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5)
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
+include_directories(../src)
+add_executable (TagDataTest ../src/TagData.cpp ../src/TagData.h TagDataTests.cpp)
+add_executable (ThreadSafePrioirtyQueueTemplateTest ../src/TagData.cpp ../src/TagData.h ../src/ThreadsafePriorityQueue.hpp ThreadSafePriorityQueueTemplateTests.cpp)
