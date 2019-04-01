@@ -1,2 +1,4 @@
 1) Use IPC for emulating user's kick
 2) Write admin part for running specific lines with specific gamers, etc
+3) Write Save/Restore
+4) Write unit tests

@@ -1,11 +1,12 @@
 #include "Lane.h"
 #include "Player.h"
 #include "Utils.h"
+#include "Game.h"
 #include <iostream>
 
 CLane::CLane( unsigned uAmountOfPlayers )
     : vpPlayer( uAmountOfPlayers )
-    , puUtil( new CUtils )
+    , puUtil( std::make_unique<CUtils>( ) )
     , gen( rd( ) )
     , m_uAmountOfItems( 0 )
     , m_uAmountOfPlayers( uAmountOfPlayers )
@@ -13,8 +14,12 @@ CLane::CLane( unsigned uAmountOfPlayers )
     for ( unsigned i = 0; i < m_uAmountOfPlayers; ++i )
     {
         std::string sName;
+#ifdef UNIT_TEST
+        sName = "Player" + std::to_string(i);
+#else
         std::cout << "Input player # " << i + 1 << " name: ";
         std::cin >> sName;
+#endif
 
         ModifyPlayer( i, sName );
     }
@@ -23,14 +28,14 @@ CLane::CLane( unsigned uAmountOfPlayers )
 void
 CLane::ModifyPlayer( unsigned uIndex, const std::string& sName )
 {
-    std::shared_ptr< CPlayer > pPlayer( new CPlayer( sName ) );
+    auto pPlayer = std::make_shared<CPlayer>( sName );
     vpPlayer.at( uIndex ) = std::move( pPlayer );
 }
 
 void
 CLane::AddPlayer( const std::string& sName )
 {
-    std::shared_ptr< CPlayer > pPlayer( new CPlayer( sName ) );
+    auto pPlayer = std::make_shared<CPlayer>( sName );
     vpPlayer.push_back( std::move( pPlayer ) );
     puUtil->Log( "Current amount of players: " + std::to_string( vpPlayer.size( ) ) );
 }
@@ -50,7 +55,7 @@ CLane::Play( )
                     "Current Frame number: "
                         + std::to_string( pPlayer->GetGame( )->GetCurrentFrameNumber( ) ) );
                 if ( pPlayer->GetGame( )->GetCurrentFrame( )->GetCurrentTrialNumber( )
-                     == static_cast< unsigned short >( TRIAL_NUMBER::FIRST ) )
+                     == TRIAL_NUMBER::FIRST  )
                 {
                     WaitForKick( puUtil->GetMaxItems( ) );
 
@@ -64,7 +69,7 @@ CLane::Play( )
                 if ( pPlayer->GetGame( )->GetRestOfItems( ) > 0 )
                 {
                     if ( pPlayer->GetGame( )->GetCurrentFrame( )->GetCurrentTrialNumber( )
-                         == static_cast< unsigned short >( TRIAL_NUMBER::SECOND ) )
+                         == TRIAL_NUMBER::SECOND )
                     {
                         // Log("2nd trial rest of items: " +
                         // std::to_string(pPlayer->GetGame()->GetRestOfItems()));
@@ -87,7 +92,7 @@ CLane::Play( )
                         pPlayer->GetGame( )->ModifyCurrentTrialNumber( );
                     }
                     else if ( pPlayer->GetGame( )->GetCurrentFrame( )->GetCurrentTrialNumber( )
-                              == static_cast< unsigned short >( TRIAL_NUMBER::SECOND ) )
+                              == TRIAL_NUMBER::SECOND )
                     {
                         // Log("2nd trial rest of items: " +
                         // std::to_string(pPlayer->GetGame()->GetRestOfItems()));
@@ -105,10 +110,10 @@ CLane::Play( )
                 }
 
                 if ( pPlayer->GetGame( )->GetCurrentFrame( )->GetCurrentTrialNumber( )
-                     == static_cast< unsigned short >( TRIAL_NUMBER::THIRD ) )
+                     == TRIAL_NUMBER::THIRD )
                 {
                     if ( pPlayer->GetGame( )->GetCurrentFrame( )->GetCurrentTrialNumber( )
-                         != static_cast< unsigned short >( TRIAL_NUMBER::SECOND ) )
+                         != TRIAL_NUMBER::SECOND )
                     {
                         if ( pPlayer->GetGame( )->GetCurrentFrame( )->Get10thFrame( )
                              && pPlayer->GetGame( )->GetCurrentFrame( )->GetFirstTrialItems( )
@@ -163,4 +168,19 @@ CLane::WaitForKick( unsigned uCurrentAmountOfItems )
 
     // std::cout << "Input amount of pins: ";
     // std::cin >> m_uAmountOfItems;
+}
+
+std::vector< std::shared_ptr< CPlayer > > CLane::getPlayersList() const
+{
+    return vpPlayer;
+}
+
+unsigned CLane::getAmountOfItems() const
+{
+    return m_uAmountOfItems;
+}
+
+unsigned CLane::getAmountOfPlayers() const
+{
+    return m_uAmountOfPlayers;
 }

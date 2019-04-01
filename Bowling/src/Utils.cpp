@@ -1,12 +1,6 @@
 #include "Utils.h"
 #include <iostream>
 
-CUtils::CUtils( )
-    : MAX_FRAMES( 10 )
-    , MAX_ITEMS( 10 )
-{
-}
-
 void
 CUtils::Log( const std::string& sPlayerName, const std::string& sData )
 {
@@ -15,7 +9,7 @@ CUtils::Log( const std::string& sPlayerName, const std::string& sData )
 
     if(outputFile)
     {
-        outputFile << data << std::endl;
+        outputFile << "Trace info for " << sPlayerName << ": " << sData << std::endl;
         outputFile.close();
     }*/
 }
@@ -28,7 +22,7 @@ CUtils::Log( const std::string& sData )
 
     if(outputFile)
     {
-        outputFile << data << std::endl;
+        outputFile << "Trace info: " << sData << std::endl;
         outputFile.close();
     }*/
 }

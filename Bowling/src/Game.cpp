@@ -1,10 +1,8 @@
 #include "Game.h"
-#include "Frame.h"
-#include "Utils.h"
 #include <iostream>
 
 CGame::CGame( )
-    : puUtil( new CUtils )
+    : puUtil( std::make_shared<CUtils>( ) )
     , uCurrentFrameNumber( 0 )
     , uRestOfItems( puUtil->GetMaxItems( ) )
     , uTotal( 0 )
@@ -12,32 +10,36 @@ CGame::CGame( )
 {
     for ( unsigned short i = 0; i < puUtil->GetMaxFrames( ); ++i )
     {
-        std::shared_ptr< CFrame > pFrame( new CFrame );
+        std::shared_ptr< CFrame > pFrame = std::make_shared<CFrame>( );
         vpFrames.at( i ) = std::move( pFrame );
     }
 }
 
 // Getters
-std::shared_ptr< CFrame >
+CFrame*
 CGame::GetCurrentFrame( ) const
 {
     return GetFrame( uCurrentFrameNumber );
 }
-std::shared_ptr< CFrame >
+
+CFrame*
 CGame::GetFrame( unsigned short nFrameNumber ) const
 {
-    return vpFrames.at( nFrameNumber );
+    return vpFrames.at( nFrameNumber ).get();
 }
+
 unsigned short
 CGame::GetCurrentFrameNumber( ) const
 {
     return uCurrentFrameNumber;
 }
+
 unsigned short
 CGame::GetRestOfItems( ) const
 {
     return uRestOfItems;
 }
+
 unsigned
 CGame::GetTotal( ) const
 {
@@ -50,7 +52,7 @@ CGame::ModifyCurrentTrialNumber( )
     UpdateRestOfItems( );
 
     if ( GetCurrentFrame( )->GetCurrentTrialNumber( )
-         == static_cast< unsigned short >( TRIAL_NUMBER::SECOND ) )
+         == TRIAL_NUMBER::SECOND )
     {
         // Log("RestOfItems after 2nd trial: " + std::to_string(uRestOfItems));
 
@@ -82,8 +84,8 @@ CGame::ModifyCurrentTrialNumber( )
 
             if ( uCurrentFrameNumber > 1 )
             {
-                std::shared_ptr< CFrame > FrPrevious = GetFrame( uCurrentFrameNumber - 1 );
-                std::shared_ptr< CFrame > FrPrevPrevious = GetFrame( uCurrentFrameNumber - 2 );
+                auto FrPrevious = GetFrame( uCurrentFrameNumber - 1 );
+                auto FrPrevPrevious = GetFrame( uCurrentFrameNumber - 2 );
 
                 if ( uCurrentFrameNumber >= 2 && FrPrevious->GetFlags( ) == FLAGS::STRIKE
                      && FrPrevPrevious->GetFlags( ) == FLAGS::STRIKE )
@@ -127,7 +129,7 @@ CGame::ModifyCurrentTrialNumber( )
                         == puUtil->GetMaxItems( ) )
             {
                 GetCurrentFrame( )->SetCurrentTrialNumber(
-                    static_cast< unsigned short >( TRIAL_NUMBER::THIRD ) );
+                    TRIAL_NUMBER::THIRD );
             }
             else
             {
@@ -143,7 +145,7 @@ CGame::ModifyCurrentTrialNumber( )
                     uTotal += puUtil->GetMaxItems( );
                     puUtil->Log( "2nd trial TOTAL AFTER 10th XX: " + std::to_string( uTotal ) );
 
-                    std::shared_ptr< CFrame > FrPrevious = GetFrame( uCurrentFrameNumber - 1 );
+                    auto FrPrevious = GetFrame( uCurrentFrameNumber - 1 );
                     if ( FrPrevious->GetFlags( ) == FLAGS::STRIKE )
                     {
                         puUtil->Log( "2nd trial TOTAL BEFORE 10th XXX: "
@@ -168,14 +170,14 @@ CGame::ModifyCurrentTrialNumber( )
         else
         {
             GetCurrentFrame( )->SetCurrentTrialNumber(
-                static_cast< unsigned short >( TRIAL_NUMBER::FIRST ) );
+                TRIAL_NUMBER::FIRST );
         }
     }
     else if ( GetCurrentFrame( )->GetCurrentTrialNumber( )
-              == static_cast< unsigned short >( TRIAL_NUMBER::FIRST ) )
+              == TRIAL_NUMBER::FIRST )
     {
         GetCurrentFrame( )->SetCurrentTrialNumber(
-            static_cast< unsigned short >( TRIAL_NUMBER::SECOND ) );
+            TRIAL_NUMBER::SECOND );
 
         if ( uCurrentFrameNumber >= 1
              && GetFrame( uCurrentFrameNumber - 1 )->GetFlags( ) == FLAGS::SPARE )
@@ -215,7 +217,7 @@ void
 CGame::UpdateRestOfItems( )
 {
     if ( GetCurrentFrame( )->GetCurrentTrialNumber( )
-         == static_cast< unsigned short >( TRIAL_NUMBER::FIRST ) )
+         == TRIAL_NUMBER::FIRST )
     {
         uRestOfItems = puUtil->GetMaxItems( ) - GetCurrentFrame( )->GetFirstTrialItems( );
     }
@@ -252,4 +254,9 @@ void
 CGame::GameOver( )
 {
     std::cout << "Game Over!!!" << std::endl;
+}
+
+std::shared_ptr< CUtils > CGame::GetUtils() const
+{
+    return puUtil;
 }
