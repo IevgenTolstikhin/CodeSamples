@@ -1,62 +1,52 @@
-#define BOOST_TEST_MODULE FrameTest testcases
-
-#ifdef WIN32
-#include <boost/test/unit_test.hpp>
-#else
-#include <boost/test/included/unit_test.hpp>
-#endif
+#include <gtest/gtest.h>
 
 #include "Frame.h"
 #include "Utils.h"
 
-BOOST_AUTO_TEST_SUITE (FrameTest)
-
-BOOST_AUTO_TEST_CASE(InitFrameTestCase)
+TEST(FrameTest, InitFrameTestCase)
 {
     CFrame frame;
-    BOOST_CHECK_EQUAL(frame.GetFirstTrialItems(), 0);
-    BOOST_CHECK_EQUAL(frame.GetSecondTrialItems(), 0);
-    BOOST_CHECK(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::ZERO);
-    BOOST_CHECK_EQUAL(frame.Get10thFrame(), false);
-    BOOST_CHECK(frame.GetFlags() == FLAGS::NOTHING);
+    ASSERT_EQ(frame.GetFirstTrialItems(), 0);
+    ASSERT_EQ(frame.GetSecondTrialItems(), 0);
+    ASSERT_TRUE(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::ZERO);
+    ASSERT_FALSE(frame.Get10thFrame());
+    ASSERT_TRUE(frame.GetFlags() == FLAGS::NOTHING);
 }
 
-BOOST_AUTO_TEST_CASE(SetGetFirstTrialTestCase)
+TEST(FrameTest, SetGetFirstTrialTestCase)
 {
     CFrame frame;
     frame.SetFirstTrialItems(8);
-    BOOST_CHECK_EQUAL(frame.GetFirstTrialItems(), 8);
+    ASSERT_EQ(frame.GetFirstTrialItems(), 8);
 }
 
-BOOST_AUTO_TEST_CASE(SetGetSecondTrialTestCase)
+TEST(FrameTest, SetGetSecondTrialTestCase)
 {
     CFrame frame;
     frame.SetSecondTrialItems(6);
-    BOOST_CHECK_EQUAL(frame.GetSecondTrialItems(), 6);
+    ASSERT_EQ(frame.GetSecondTrialItems(), 6);
 }
 
-BOOST_AUTO_TEST_CASE(SetGetCurrentTrialTestCase)
+TEST(FrameTest, SetGetCurrentTrialTestCase)
 {
     CFrame frame;
     frame.SetCurrentTrialNumber(TRIAL_NUMBER::THIRD);
-    BOOST_CHECK(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::THIRD);
+    ASSERT_TRUE(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::THIRD);
 }
 
-BOOST_AUTO_TEST_CASE(SetGet10thFrameTestCase)
+TEST(FrameTest, SetGet10thFrameTestCase)
 {
     CFrame frame;
     frame.Set10thFrame(true);
-    BOOST_CHECK_EQUAL(frame.Get10thFrame(), true);
+    ASSERT_TRUE(frame.Get10thFrame());
 }
 
-BOOST_AUTO_TEST_CASE(SetGetFlagTestCase)
+TEST(FrameTest, SetGetFlagTestCase)
 {
     CFrame frame;
     frame.SetFlags(FLAGS::SPARE);
-    BOOST_CHECK(frame.GetFlags() == FLAGS::SPARE);
+    ASSERT_TRUE(frame.GetFlags() == FLAGS::SPARE);
 
     frame.SetFlags(FLAGS::STRIKE);
-    BOOST_CHECK(frame.GetFlags() == FLAGS::STRIKE);
+    ASSERT_TRUE(frame.GetFlags() == FLAGS::STRIKE);
 }
-
-BOOST_AUTO_TEST_SUITE_END()
