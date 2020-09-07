@@ -8,7 +8,7 @@ TEST(FrameTest, InitFrameTestCase)
     CFrame frame;
     ASSERT_EQ(frame.GetFirstTrialItems(), 0);
     ASSERT_EQ(frame.GetSecondTrialItems(), 0);
-    ASSERT_TRUE(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::ZERO);
+    ASSERT_TRUE(frame.GetCurrentTrialNumber() == TRIAL_NUMBER::FIRST);
     ASSERT_FALSE(frame.Get10thFrame());
     ASSERT_TRUE(frame.GetFlags() == FLAGS::NOTHING);
 }

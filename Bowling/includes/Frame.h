@@ -33,7 +33,7 @@ public:
 private:
     unsigned short uFirstTrialItems = 0;
     unsigned short uSecondTrialItems = 0;
-    TRIAL_NUMBER uCurrentTrialNumber = TRIAL_NUMBER::ZERO;
+    TRIAL_NUMBER uCurrentTrialNumber = TRIAL_NUMBER::FIRST;
     FLAGS fFlags = FLAGS::NOTHING;
     bool b10thFrame = false;
 };

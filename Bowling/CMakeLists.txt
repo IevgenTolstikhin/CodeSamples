@@ -9,3 +9,7 @@ add_test (NAME BowlingFrameTests COMMAND FrameTest)
 add_test (NAME BowlingGameTests COMMAND GameTest)
 add_test (NAME BowlingPlayerTests COMMAND PlayerTest)
 add_test (NAME BowlingLaneTests COMMAND LaneTest)
+
+project (Kick)
+add_subdirectory (Devices/includes)
+add_subdirectory (Devices/src)

@@ -12,5 +12,6 @@ TEST(LaneTest, InitLaneTestCase)
 
 TEST(LaneTest, PlayTestCase)
 {
-    //TODO
+    CLane lane(1);
+    lane.Play();
 }

@@ -15,7 +15,7 @@ TEST(PlayerTest, InitPlayerTestCase)
     //Should be default frame from the very beginning
     ASSERT_EQ(player.GetGame()->GetFrame(0)->GetFirstTrialItems(), 0);
     ASSERT_EQ(player.GetGame()->GetFrame(0)->GetSecondTrialItems(), 0);
-    ASSERT_TRUE(player.GetGame()->GetFrame(0)->GetCurrentTrialNumber() == TRIAL_NUMBER::ZERO);
+    ASSERT_TRUE(player.GetGame()->GetFrame(0)->GetCurrentTrialNumber() == TRIAL_NUMBER::FIRST);
     ASSERT_FALSE(player.GetGame()->GetFrame(0)->Get10thFrame());
     ASSERT_TRUE(player.GetGame()->GetFrame(0)->GetFlags() == FLAGS::NOTHING);
 }
